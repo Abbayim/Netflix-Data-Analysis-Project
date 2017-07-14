@@ -1,5 +1,7 @@
-library(rvest, stringi, stringr)
-library(xlsx)
+library("stringi", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+library("stringr", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+library("rvest", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+library("xlsx", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
 
 # for execution, commented because the list itself is fat.
 # every_8_digit_number <- c(10000000:999999999)
@@ -47,7 +49,10 @@ process_cast <- function(details, df) {
   # Assumption: If I search <title> <year> the first result will be what I want.
   # Generate search URL on IMDB: The Crown 2016 should look like: http://www.imdb.com/find?ref_=nv_sr_fn&q=the+crown+2016&s=all
   title_formatted <- sub(pattern=" ", x=tolower(details["title"]), replacement="+")
-  page <- read_html(paste("http://www.imdb.com/find?ref_=nv_sr_fn&q=", title_formatted, "+", details["year"], "&s=all", sep=""))
+  
+  Sys.sleep(sample(10, 1) * 0.1)
+  
+  page <- read_html(paste("https://www.imdb.com/find?ref_=nv_sr_fn&q=", title_formatted, "+", details["year"], "&s=all", sep=""))
   result <- toString(html_nodes(page, ".result_text")[1])
   result <- strsplit(sub(pattern="href=\\\"", result, replacement=":::"), ":::")[[1]][2] # Get rid of left side
   # result <- strsplit(sub(pattern="/?", result, replacement=":::"), ":::")[[1]][1] # Get rid of right side
@@ -172,5 +177,5 @@ write.xlsx(x = df_movies_clean, file = "netflix_films.xlsx",
            sheetName = "Sheet1")
 write.xlsx(x = df_tv_clean, file = "netflix_tv.xlsx",
            sheetName = "Sheet1")
-write.xlsx(x = df_actors, file = "test.excelfile.xlsx",
+write.xlsx(x = df_actors, file = "netflix_imdb_cast_crew.xlsx",
            sheetName = "Sheet1")
