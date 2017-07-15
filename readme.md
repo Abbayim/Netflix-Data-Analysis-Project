@@ -1,3 +1,5 @@
+This code pulls metadata from every movie/tv show on Netflix, gets the cast/crew list and synopses from IMDB, uses US census data to estimate the racial composition of each media item based on its cast, uses IBM Watson to analyze its tone, and frequency analysis (how often certain words come up) to determine relevance to poverty.
+
 If you wish to run this code, run it in this order:
 ===================================================
 
