@@ -23,5 +23,26 @@ for (i in (c(1:nrow(item.frame)))){
   item.frame[i, "p_oth_crew"] = mean(as.double(crew$p_oth), na.rm = TRUE)
 }
 
+item.frame$p_whi_ranked <- rank(item.frame$p_whi)
+item.frame$p_whi_cast_ranked <- rank(item.frame$p.whi_cast)
+item.frame$p_whi_crew_ranked <- rank(item.frame$p.whi_crew)
+
+item.frame$p_bla_ranked <- rank(item.frame$p_bla)
+item.frame$p_bla_cast_ranked <- rank(item.frame$p.bla_cast)
+item.frame$p_bla_crew_ranked <- rank(item.frame$p.bla_crew)
+
+item.frame$p_his_ranked <- rank(item.frame$p_his)
+item.frame$p_his_cast_ranked <- rank(item.frame$p.his_cast)
+item.frame$p_his_crew_ranked <- rank(item.frame$p.his_crew)
+
+item.frame$p_asi_ranked <- rank(item.frame$p_asi)
+item.frame$p_asi_cast_ranked <- rank(item.frame$p.asi_cast)
+item.frame$p_asi_crew_ranked <- rank(item.frame$p.asi_crew)
+
+item.frame$p_oth_ranked <- rank(item.frame$p_oth)
+item.frame$p_oth_cast_ranked <- rank(item.frame$p.oth_cast)
+item.frame$p_oth_crew_ranked <- rank(item.frame$p.oth_crew)
+
+
 write.xlsx(x = item.frame, file = "item_tone_racial_aggregates.xlsx",
            sheetName = "Sheet1")
