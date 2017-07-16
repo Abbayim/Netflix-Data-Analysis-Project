@@ -1,6 +1,6 @@
 words <- colnames(read.csv("poverty_word_list.csv"))
 
-df <- read.xlsx("item_tone_racial_aggregates.xlsx", 1)
+df <- read.xlsx("item_tone_racial_aggregates.xlsx", 1, stringsAsFactors=FALSE)
 
 for(i in c(1:nrow(df))){
   synopsis_list <- strsplit(tolower(as.character(df[i, "synopsis"])), " ")[[1]]

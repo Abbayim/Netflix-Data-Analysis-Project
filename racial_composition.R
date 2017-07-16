@@ -1,7 +1,7 @@
 library(wru)
 
 census.key <- as.character(read.csv("keys.csv")[1, "key"])
-name.frame <- read.xlsx("netflix_imdb_cast_crew.xlsx", 1)
+name.frame <- read.xlsx("netflix_imdb_cast_crew.xlsx", 1, stringsAsFactors=FALSE)
 
 total_names <- nrow(name.frame)
 

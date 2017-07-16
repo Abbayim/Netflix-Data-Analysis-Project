@@ -2,7 +2,7 @@ library("xlsx", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/
 
 SERVICE_USERNAME_PASSWORD = as.character(read.csv("keys.csv")[2, "key"])
 
-df <- read.xlsx("netflix_items_expanded_synopsis.xlsx", 1)
+df <- read.xlsx("netflix_items_expanded_synopsis.xlsx", 1, stringsAsFactors=FALSE)
 
 total <- nrow(df)
 

@@ -1,16 +1,19 @@
+"netflix_items.xlsx"
+df <- read.xlsx("netflix_items.xlsx", 1, stringsAsFactors=FALSE)
 
-df <- read.xlsx("netflix_items.xlsx", 1)
+# df <- data.frame(df, stringsAsFactors=FALSE)
 
-expand_synopsis <- function(details) {
+expand_synopsis <- function(ID) {
   page <- tryCatch({
-    read_html(paste("http://www.imdb.com/title/", details["IMDB id"], "/synopsis?ref_=ttqu_ql_stry_3", sep=""))
+    read_html(paste("http://www.imdb.com/title/", ID, "/synopsis?ref_=ttqu_ql_stry_3", sep=""))
   }, error = function(err) {
-    return("Failure")
+    return(NULL)
   })
-  if (page == "Failure"){
+  if (is.null(page)){
     return("")
   }
-  html_text(html_nodes(page, "#swiki\\.2\\.1"))
+  text <- as.character(html_text(html_nodes(page, "#swiki\\.2\\.1")))
+  text
 }
 
 trim_IMDB_list <- function(input) {
@@ -30,8 +33,9 @@ trim_IMDB_list <- function(input) {
 
 for (i in 1:nrow(df_clean)){
   print(i)
-  df[i, "synopsis"] <- paste(df[i, "synopsis"], expand_synopsis(df[i,]), collapse=", ")
+  new_text <- expand_synopsis(df[i, "IMDB_id"])
+  df[i, "synopsis"] = paste(df[i, "synopsis"], new_text, collapse=", ")
 }
 
-write.xlsx(x = df_clean, file = "netflix_items_expanded_synopsis.xlsx",
+write.xlsx(x = df, file = "netflix_items_expanded_synopsis.xlsx",
            sheetName = "Sheet1")

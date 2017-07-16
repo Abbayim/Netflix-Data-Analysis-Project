@@ -1,6 +1,6 @@
 
 
-df_clean <- read.xlsx("netflix_items.xlsx", 1)
+df_clean <- read.xlsx("netflix_items.xlsx", 1, stringsAsFactors=FALSE)
 
 categories2 <- c("media", "person", "year", "position", "note")
 m2 <- matrix(ncol=length(categories2)) # only 2 columns for 2 things I care about: Actor, Things they're in, and we still dont' know how long it will be, so for now I make it very long and hope it doesn't eat too much space.
@@ -24,7 +24,7 @@ process_cast <- function(details, df) {
   ITEM_COUNTER <- nrow(df)
   Sys.sleep(sample(10, 1) * 0.1)
   page <- tryCatch({
-    read_html(paste("http://www.imdb.com/title/", details["IMDB id"], "/fullcredits?ref_=tt_ql_1", sep="")) 
+    read_html(paste("http://www.imdb.com/title/", as.character(details$IMDB_id), "/fullcredits?ref_=tt_ql_1", sep="")) 
   }, error = function(err) {
     return("Failure")
   })

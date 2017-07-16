@@ -17,14 +17,15 @@ sample_ids <- c(sample_ids_movies, sample_ids_tv, sample_ids_expanded)
 
 id_dictionary <- sample_ids # development, will switch to every_8_digit_number when the time is right.
 
-categories <- c("title", "year", "rating", "duration", "synopsis", "genres", "director", "starring", "creator", "episodes", "IMDB id")
+categories <- c("Netflix_id", "title", "year", "rating", "duration", "synopsis", "genres", "director", "starring", "creator", "episodes", "IMDB_id")
 
 m <- matrix(ncol=length(categories), nrow=length(id_dictionary))
 colnames(m) <- categories
 rownames(m) <- id_dictionary
-df <- data.frame(m)
+df <- data.frame(m, stringsAsFactors=FALSE)
 df_movies <- data.frame(m)
 df_tv <- data.frame(m)
+
 
 trim_IMDB_list <- function(input) {
   input <- trimws(unlist(strsplit(input, "\n", fixed = TRUE)))
@@ -67,7 +68,6 @@ process_media_page <- function(page, df) {
   df[i, "genres"] <- info1[which(info1 == "Genre: " | info1 == "Genres: ") + 1][1]    
   df[i, "director"] <- info1[which(info1 == "Director: " | info1 == "Directors: ") + 1][1]
   df[i, "starring"] <- info1[which(info1 == "Starring: ") + 1][1]
-  df[i, "cast"] <- info1[which(info1 == "Cast: ") + 1][1]
   df[i, "creator"] <- info1[which(info1 == "Creator: " | info1 == "Creators: ") + 1][1]
   
   
@@ -102,7 +102,7 @@ process_media_page <- function(page, df) {
     print("uh oh!")
   }
   IMDB_id <- unlist(strsplit(as.character(result[1]), "/"))[4]
-  df[i, "IMDB id"] <- IMDB_id
+  df[i, "IMDB_id"] <- IMDB_id
   df
 }
 
@@ -114,6 +114,7 @@ for (i in c(1:length(sample_ids))) {
   if (html_text(html_nodes(page, "h1"))[1] == "Sign In" | html_text(html_nodes(page, "h1"))[1] == "See what’s next." | html_text(html_nodes(page, "h1"))[1] == "Page Not Found") { # Check to see if the page didn't load anything. If it did you can continue on.
     next }
   df <- process_media_page(page, df) # Gosh I really hope R knows to pass pointers through or this is SO inefficient
+  df[i, "Netflix_id"] <- sample_ids[i]
   if (html_text(html_nodes(page, "h3"))[1] == "MORE DETAILS"){ # IT'S A MOVIE
     df_movies[nrow(df_movies)+1, ] <- df[i,]
   } else { # IT'S A TV SHOW

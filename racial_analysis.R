@@ -1,5 +1,5 @@
-item.frame <- read.xlsx("netflix_items_watson_analysis.xlsx", 1)
-name.frame <- read.xlsx("racial_compositions.xlsx", 1)
+item.frame <- read.xlsx("netflix_items_watson_analysis.xlsx", 1, stringsAsFactors=FALSE)
+name.frame <- read.xlsx("racial_compositions.xlsx", 1, stringsAsFactors=FALSE)
 
 for (i in (c(1:nrow(item.frame)))){
   title <- as.character(item.frame[i,"title"])
