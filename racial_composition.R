@@ -4,8 +4,9 @@ census.key <- as.character(read.csv("keys.csv")[1, "key"])
 name.frame <- read.xlsx("netflix_imdb_cast_crew.xlsx", 1, stringsAsFactors=FALSE)
 
 total_names <- nrow(name.frame)
-
-for (i in c(1:total_names)) {
+i <- 1
+while (i <= total_names) {
+  print(i)
   name <- as.character(name.frame[i, "person"])
   name_list <- strsplit(name, " ")[[1]]
   name_list <- name_list[name_list != "Jr." & name_list != "Sr." & name_list != "I" & name_list != "II" & name_list != "III" & name_list != "IV"]
@@ -13,6 +14,7 @@ for (i in c(1:total_names)) {
   name_index_2010 <- which(surnames$surname == surname)
   name_index_2000 <- which(surnames2000$surname == surname)
   if (length(name_index_2000) == 0 & length(name_index_2010) == 0) {
+    i <- i + 1
     next
   } else if (length(name_index_2000) == 0 & length(name_index_2010) != 0) {
     name.frame[i, "p_whi"] <- surnames[name_index_2010, 2]
@@ -33,6 +35,7 @@ for (i in c(1:total_names)) {
     name.frame[i, "p_asi"] <- mean(surnames[name_index_2010,5], surnames2000[name_index_2000, 5])
     name.frame[i, "p_oth"] <- mean(surnames[name_index_2010,6], surnames2000[name_index_2000, 6])
   }
+  i <- i + 1
 }
 
 write.xlsx(x = name.frame, file = "racial_compositions.xlsx",

@@ -11,9 +11,10 @@ sample_ids_movies <- c(60037627, 80108238, 60036691)
 sample_ids_tv <- c(80025678, 70177083)
 sample_ids_bad <- c(100000000, "10000000", "abcdefgh")
 sample_ids_expanded <- c(80144588, 80037759, 70184207, 80025384, 80000770, 80107369, 80097003, 70052705, 80091741, 80117470, 80053653, 939827)
+sample_ids_expanded2 <- c(70178217, 80117485, 80168188, 70049392, 80024103, 80088567, 70153404, 70153404, 80133335, 70300205, 70208248, 60029157)
 sample_ids_people <- c(20033457)
   
-sample_ids <- c(sample_ids_movies, sample_ids_tv, sample_ids_bad, sample_ids_expanded)
+sample_ids <- c(sample_ids_movies, sample_ids_tv, sample_ids_bad, sample_ids_expanded, sample_ids_expanded2)
 
 id_dictionary <- sample_ids # development, will switch to every_8_digit_number when the time is right.
 
@@ -21,7 +22,7 @@ categories <- c("Netflix_id", "title", "year", "rating", "duration", "synopsis",
 
 m <- matrix(ncol=length(categories), nrow=length(id_dictionary))
 colnames(m) <- categories
-rownames(m) <- id_dictionary
+# rownames(m) <- id_dictionary
 df <- data.frame(m, stringsAsFactors=FALSE)
 df_movies <- data.frame(m)
 df_tv <- data.frame(m)

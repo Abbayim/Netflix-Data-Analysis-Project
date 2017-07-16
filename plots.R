@@ -1,3 +1,5 @@
+library("ggplot2", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+
 df <- read.xlsx("item_tone_racial_aggregates_poverty_analysis.xlsx",1,stringsAsFactors=FALSE)
 
 poverty_scores <- (df$poverty_1_ranked + df$poverty_2_ranked) / 2
@@ -6,7 +8,7 @@ keep <- which(!(df$poverty_1_ranked == min(poverty_scores)))
 x <- poverty_scores[keep]
 
 x_label <- "Ordered frequency of poverty-related words in synopsis"
-ITERATION <- 6
+ITERATION <- 7
 
 png(paste("./plots/Tone of Poverty/", ITERATION, "-Anger", ".png", sep=""))
 y <- df$anger_norm[keep]
