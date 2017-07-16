@@ -13,7 +13,7 @@ sample_ids_bad <- c(100000000, "10000000", "abcdefgh")
 sample_ids_expanded <- c(80144588, 80037759, 70184207, 80025384, 80000770, 80107369, 80097003, 70052705, 80091741, 80117470, 80053653, 939827)
 sample_ids_people <- c(20033457)
   
-sample_ids <- c(sample_ids_movies, sample_ids_tv, sample_ids_expanded)
+sample_ids <- c(sample_ids_movies, sample_ids_tv, sample_ids_bad, sample_ids_expanded)
 
 id_dictionary <- sample_ids # development, will switch to every_8_digit_number when the time is right.
 
